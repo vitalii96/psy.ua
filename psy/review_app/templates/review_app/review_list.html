@@ -1,0 +1,46 @@
+{% extends 'psychologist_app/base.html' %}
+
+{% block content %}
+<h2>Відгуки</h2>
+
+{% for r in reviews %}
+    <ul>
+        <li>
+            <h2>{{ r.client.user.first_name }} {{ r.client.user.last_name }}</h2>
+            <h3>{{ r.content }}</h3>
+        </li>
+    </ul>
+{% endfor %}
+
+{% if user.is_authenticated %}
+<div>
+    <form id="add-review-form">
+        {% csrf_token %}
+        <textarea name="content" required></textarea>
+        <input type="submit" value="Додати відгук">
+    </form>
+</div>
+{% endif %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    $("#add-review-form").submit(function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            type: "POST",
+            url: "{% url 'add_review' %}",
+            data: $(this).serialize(),
+            success: function(response) {
+                alert("Відгук додано!");
+                location.reload(); // Оновлення списку відгуків після успішного додавання
+            },
+            error: function(error) {
+                alert("Помилка при додаванні відгуку");
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

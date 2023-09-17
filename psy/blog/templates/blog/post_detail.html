@@ -1,0 +1,5 @@
+<h1>{{post.title}}</h1>
+{% if post.profile_picture %}
+<p><img src="{{ post.profile_picture.url }}" width="500" height="400"></p>
+{% endif%}
+{{post.content}}

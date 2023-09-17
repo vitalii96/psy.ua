@@ -1,0 +1,66 @@
+{% load static %}
+{% load socialaccount %}
+
+<html lang="en" data-bs-theme="dark">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Вхід</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sign-in/">
+    <link rel="stylesheet" type="text/css" href="{% static 'client_app/sign-in.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'client_app/bootstrap.min.css' %}">
+  </head>
+   <body class="d-flex align-items-center py-4 bg-body-tertiary">
+    <main class="form-signin w-100 m-auto">
+      <form method="post">
+        {% csrf_token %}
+
+        <div class="form-group">
+          <label for="{{ form.username.id_for_label }}">Логін</label>
+          {{ form.username }}
+          <div class="form-error">{{ form.username.errors }}</div>
+        </div>
+
+        <div class="form-group">
+          <label for="{{ form.first_name.id_for_label }}">Ім'я</label>
+          {{ form.first_name }}
+          <div class="form-error">{{ form.first_name.errors }}</div>
+        </div>
+
+        <div class="form-group">
+          <label for="{{ form.last_name.id_for_label }}">Прізвище</label>
+          {{ form.last_name }}
+          <div class="form-error">{{ form.last_name.errors }}</div>
+        </div>
+
+        <div class="form-group">
+          <label for="{{ form.email.id_for_label }}">Email:</label>
+          {{ form.email }}
+          <div class="form-error">{{ form.email.errors }}</div>
+        </div>
+
+        <div class="form-group">
+          <label for="{{ form.password1.id_for_label }}">Пароль:</label>
+          {{ form.password1 }}
+          <div class="form-error">{{ form.password1.errors }}</div>
+        </div>
+
+        <div class="form-group">
+          <label for="{{ form.password2.id_for_label }}">Підтвердження пароля:</label>
+          {{ form.password2 }}
+          <div class="form-error">{{ form.password2.errors }}</div>
+        </div>
+
+        <div class="d-grid gap-2">
+          <button class="btn btn-primary" type="submit">Зареєструватись</button>
+          <a href="{% provider_login_url 'google' %}?process=login">
+            <button class="btn btn-primary w-100 py-2" type="button">Увійти з Google</button>
+          </a>
+        </div>
+      </form>
+    </main>
+    <script src="{% static 'client_app/bootstrap.bundle.min.js' %}"></script>
+  </body>
+</html>
+

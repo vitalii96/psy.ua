@@ -1,0 +1,137 @@
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* 2. inline-block */
+nav ul {
+  text-align: center;
+}
+
+nav ul li {
+  margin: 0 1rem;
+  display: inline-block;
+}
+
+/* Ваші інші стилі */
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* 2. inline-block */
+nav ul {
+  text-align: center;
+}
+
+nav ul li {
+  margin: 0 1rem;
+  display: inline-block;
+}
+
+.blog-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.all-topics,
+.topic-title {
+  font-size: 18px;
+  margin: 5px 0;
+  color: #ff6b6b; /* Змініть на бажаний колір для посилань */
+}
+
+.topic-title.current-topic {
+  font-weight: bold;
+}
+
+.post {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.post-topic {
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.post-image img {
+  max-width: 100%;
+  height: auto;
+}
+
+.post-title {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.post-content {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.post-author,
+.post-date {
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: #888;
+}
+
+.read-more a {
+  text-decoration: none;
+  color: #ff6b6b; /* Змініть на бажаний колір для посилань */
+  transition: color 0.3s;
+}
+
+.read-more a:hover {
+  color: #333; /* Змініть на бажаний колір при наведенні */
+}
+
+.list-pages a {
+  text-decoration: none;
+  color: #ff6b6b; /* Змініть на бажаний колір для посилань */
+  padding: 8px 16px;
+  border: 2px solid #ff6b6b; /* Змініть на бажаний колір для рамки */
+  border-radius: 30px;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  background-color: transparent;
+}
+
+.list-pages a:hover {
+  background-color: #ff6b6b; /* Змініть на бажаний колір для фону при наведенні */
+  color: #fff; /* Змініть на бажаний колір для тексту при наведенні */
+  border-color: #ff6b6b; /* Змініть на бажаний колір для рамки при наведенні */
+}
+
+
+
+/* Тут норм */
+
+/* Ваші попередні стилі */
+
+/* Стилі для фіксованого меню збоку */
+
+
+.topic-title {
+  font-size: 18px;
+  margin: 5px 0;
+  color: #ff6b6b; /* Змініть на бажаний колір для посилань */
+}
+
+.topic-title.current-topic {
+  font-weight: bold;
+}
+
+/* Стилі для контенту */
+.content {
+  margin-left: 280px; /* Змініть на ширину меню плюс додатковий відступ */
+  padding: 20px;
+  padding-top: 30px; /* Додайте відступ від верхнього краю */
+}
+
+/* Ваші інші стилі */

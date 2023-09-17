@@ -1,0 +1,80 @@
+{% extends 'psychologist_app/base.html' %}
+{% load static %}
+{% load cache %}
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'blog/style.css' %}">
+<h1 class="blog-title">Блог</h1>
+
+{% if topic_selected == 0 %}
+    <p class="all-topics">Всі теми</p>
+{% else %}
+    <p class="all-topics"><a href="{% url 'posts' %}">Всі теми</a></p>
+{% endif %}
+
+<div class="">
+    {% for topic in topics %}
+        {% if topic.post__count > 0 %}
+            <p class="topic-title">
+
+                {% if topic.slug == topic_selected %}
+                    {{topic.title}}
+                {% else %}
+                    <a href="{{ topic.get_absolute_url }}">{{topic.title}}</a>
+                {% endif %}
+            </p>
+        {% endif %}
+    {% endfor %}
+</div>
+
+
+{% for post in posts %}
+    <div class="content ">
+        <h2 class="post-topic">Тема : {{post.topic}}</h2>
+        {% if post.profile_picture %}
+            <p class="post-image"><img src="{{ post.profile_picture.url }}" alt="Image" width="500" height="400"></p>
+        {% endif %}
+        <h3 class="post-title">{{post.title}}</h3>
+        <p class="post-content">{{post.content|linebreaks|truncatewords:50}}</p>
+        <p class="post-author">Автор : {{post.author}}</p>
+        <p class="post-date">Дата : {{post.created_at|date:"d-m-Y H:i:s"}}</p>
+        <div class="read-more">
+            <p><a href="{{post.get_absolute_url }}">Читати детальніше</a></p>
+        </div>
+    </div>
+{% endfor %}
+
+{% if page_obj.has_other_pages %}
+<nav class="list-pages">
+    <ul>
+        <li>
+            <a href="?page={{ get_first_page_number }}">На початок</a>
+        </li>
+        {% if page_obj.has_previous %}
+        <li>
+            <a href="?page={{ page_obj.previous_page_number }}">&lt;</a>
+        </li>
+        {% endif %}
+
+        {% for p in paginator.page_range %}
+        <li class="page-num">
+            {% if page_obj.number == p %}
+             <span class="current">{{ p }}</span>
+            {% else %}
+                <a href="?page={{ p }}">{{ p }}</a>
+            {% endif %}
+        </li>
+        {% endfor %}
+        {% if page_obj.has_next %}
+        <li>
+            <a href="?page={{ page_obj.next_page_number }}">&gt;</a>
+        </li>
+        {% endif %}
+        <li>
+            <a href="?page={{ paginator.num_pages }}">В кінець</a>
+        </li>
+    </ul>
+</nav>
+{% endif %}
+{% endblock %}

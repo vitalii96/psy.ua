@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="view-port" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<form method="post">
+    {% csrf_token %}
+    {% for f in form %}
+        <p><label class="form-label" for="{{f.id_for_label}}">{{f.label}}: </label> {{f}}</p>
+        <div class="form-error">{{ f.errors }}</div>
+    {% endfor %}
+    <button type="submit">Додати відгук</button>
+</form>
+
+<div>
+   <a href="{% url 'home' %}">На головну</a>
+</div>
+</body>
+</html>

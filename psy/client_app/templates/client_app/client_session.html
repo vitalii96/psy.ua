@@ -1,0 +1,48 @@
+{% extends 'psychologist_app/base.html' %}
+
+{% block content %}
+<a href="{% url 'session_record' %}">Записатись на сессію</a>
+
+{% if sessions %}
+<h1>Ваші сессії:</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Дата</th>
+      <th>Час</th>
+      <th>Статус</th>
+      <th>Дії</th>
+      <!-- Додайте інші заголовки для інших деталей сесії, якщо потрібно -->
+    </tr>
+  </thead>
+  <tbody>
+    {% for session in sessions %}
+      <tr>
+        <td>{{ session.session_date }}</td>
+        {% if session.session_time is none %}
+          <td> Час не встановлено</td>
+        {% else %}
+          <td>{{ session.session_time }}</td>
+        {% endif %}
+        <!-- Використовуйте get_status_display() для виведення українського варіанту статусу -->
+        <td>{{ session.get_status_display }}</td>
+        {% if session.status == 'confirmed' or session.status == 'pending_confirmation' %}
+          <td>
+            <form method="post">
+              {% csrf_token %}
+              <input type="hidden" name="session_id" value="{{ session.pk }}">
+              <button type="submit">Скасувати</button>
+            </form>
+          </td>
+        {% else %}
+          <td></td>
+        {% endif %}
+        <!-- Додайте інші комірки для інших деталей сесії, якщо потрібно -->
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<h1>У вас ще немає жодного запису на сессію</h1>
+{% endif %}
+{% endblock %}
