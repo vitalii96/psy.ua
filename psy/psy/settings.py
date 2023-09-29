@@ -13,11 +13,11 @@ SECRET_KEY = 'django-insecure-epl0pl1q4!vcky8-#sf4w$4^qft#%t8(rgd0=-f(8tw6i1z0nk
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0059-46-173-102-106.ngrok.io', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['f7f1-91-201-147-221.ngrok-free.app', '127.0.0.1', 'localhost']
 
 
 # Application definition
-SITE_ID = 2
+SITE_ID = 3
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -33,6 +33,8 @@ INSTALLED_APPS = [
     'review_app.apps.ReviewAppConfig',
     'client_app.apps.ClientAppConfig',
     'blog.apps.BlogConfig',
+    'telegram_bot_app.apps.TelegramBotAppConfig',
+    'settings.apps.SettingsConfig',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -153,7 +155,7 @@ AUTHENTICATION_BACKENDS = [
 ACCOUNT_LOGIN_TEMPLATE = 'login.html'
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
-SOCIALACCOUNT_LOGIN_ON_GET=True
+SOCIALACCOUNT_LOGIN_ON_GET = True
 
 INTERNAL_IPS = [
     "127.0.0.1",

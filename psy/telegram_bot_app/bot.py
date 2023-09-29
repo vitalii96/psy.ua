@@ -1,10 +1,25 @@
 import telebot
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from .models import TelegramBot
 
-TELEGRAM_BOT_TOKEN = '6660919649:AAEtScBDPP_zmuTFK2PvMbVPQFQHni7TV6Y'
-bot = telebot.TeleBot(TELEGRAM_BOT_TOKEN)
-my_chat_id = '310286340'
+
+class GetBotSettings:
+    def get_telegram_token(self):
+        try:
+            bot_token = TelegramBot.objects.first()
+            return bot_token.telegram_token
+        except TelegramBot.DoesNotExist:
+            return None
+    def get_telegram_chat_id(self):
+        try:
+            bot_token = TelegramBot.objects.first()
+            return bot_token.chat_id
+        except TelegramBot.DoesNotExist:
+            return None
+
+bot_settings = GetBotSettings()
+bot = telebot.TeleBot(bot_settings.get_telegram_token())
 
 
 @bot.message_handler(commands=['start'])
@@ -16,7 +31,7 @@ def start(message):
 
 @bot.message_handler()
 def SendInformationForm(name, phone_number, description="", telegram=''):
-    chat_id = my_chat_id
+    chat_id = bot_settings.get_telegram_chat_id()
     information = f'Отримані дані з сайту : \n Імя : {name} \n Телеграм: {telegram} \n Номер телефону: {phone_number} \n Опис проблеми: {description}'
     bot.send_message(chat_id, information)
 
@@ -32,6 +47,7 @@ def webhook(request):
 
 def set_telegram_webhook():
     # Налаштовуємо webhook на біч Telegram з URL від ngrok
-    webhook_url = 'https://0059-46-173-102-106.ngrok.io/webhook/'  # url який надав ngrok
+    webhook_url = 'https://f7f1-91-201-147-221.ngrok-free.app/webhook/'  # Виправлено URL
+    # url який надав ngrok
     bot.remove_webhook()
     bot.set_webhook(url=webhook_url)

@@ -29,6 +29,8 @@
   padding: 10px;
   border: 1px solid #ccc;
   margin: 5px;
+    background-color: white;
+    color: black;
 }
 
 .btn-feedback {
@@ -94,7 +96,7 @@
   .main-header {
     display: flex;
     align-items: center;
-    background-color: #a8ea8b;
+    background-color: grey;
 
 
   }
@@ -150,7 +152,7 @@
 <div class="feedback-form">
   <form method="post">
     {% csrf_token %}
-            <p>Форма зворотнього зв'язку</p>
+            <p style="color: black">Форма зворотнього зв'язку</p>
             {{ form.phone_number }}
             <div class="form-error">{{ form.phone_number.errors }}</div>
 
