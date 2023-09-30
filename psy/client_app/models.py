@@ -11,6 +11,14 @@ class Client(models.Model):
     profile_picture = models.ImageField(upload_to='client_profiles/', verbose_name='Фото', null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def get_user_client(user):
+        try:
+            return user.client
+        except Client.DoesNotExist:
+            return None
+
+    User.add_to_class('client', property(get_user_client))
+
     class Meta:
         verbose_name = 'Клієнти'
         verbose_name_plural = 'Клієнти'

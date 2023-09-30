@@ -20,14 +20,9 @@ class ClientCreateForm(ModelForm):
         fields = ('contact_number', 'issue_description')
 
 
-class SignUpForm(AuthenticationForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
-            field.widget.attrs.update({
-                'class': 'form-control',
-                'placeholder': field.label,
-            })
+class SignUpForm(forms.Form):
+    username = forms.CharField(max_length=65, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    password = forms.CharField(max_length=65, widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 
 class UserProfileForm(forms.ModelForm):
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
@@ -35,10 +30,11 @@ class UserProfileForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email')
+        fields = ('username', 'first_name', 'last_name', 'email','password1','password2')
         widgets = {
             'username': forms.TextInput(attrs={'class': 'form-control'}),
             'first_name': forms.TextInput(attrs={'class': 'form-control'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.TextInput(attrs={'class': 'form-control'}),
         }

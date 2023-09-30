@@ -1,6 +1,6 @@
 {% load static %}
 {% load socialaccount %}
-<!doctype html>
+
 <html lang="en" data-bs-theme="dark">
   <head>
     <meta charset="utf-8">
@@ -15,14 +15,16 @@
     <main class="form-signin w-100 m-auto">
       <form method="post">
         {% csrf_token %}
+
         <h1 class="h3 mb-3 fw-normal">Вхід</h1>
-        <div class="form-floating">
-          {{ form.username }}
+        <div class="form-group">
           <label for="{{ form.username.id_for_label }}">Ім'я користувача</label>
+          {{ form.username }}
         </div>
-        <div class="form-floating">
-          {{ form.password }}
+        <div class="form-group">
           <label for="{{ form.password.id_for_label }}">Пароль</label>
+          {{ form.password }}
+          <div class="form-error">{{ form.password.errors }}</div>
         </div>
         <div>
           <div class="d-grid gap-2">

@@ -3,10 +3,43 @@
     <title>Редагувати профіль</title>
 </head>
 <body>
-    <h1>Edit Profile</h1>
+
+    <h1>Редагувати профіль</h1>
     <form method="post">
+
         {% csrf_token %}
-        {{ form.as_p }}
+        <div class="form-group">
+          <label for="{{ form.username.id_for_label }}">Логін</label>
+          {{ form.username }}
+          <div class="form-error">{{ form.username.errors }}</div>
+        </div>
+        <div class="form-group">
+          <label for="{{ form.first_name.id_for_label }}">Імя</label>
+          {{ form.first_name }}
+          <div class="form-error">{{ form.first_name.errors }}</div>
+        </div>
+        <div class="form-group">
+          <label for="{{ form.last_name.id_for_label }}">Прізвище</label>
+          {{ form.last_name }}
+          <div class="form-error">{{ form.last_name.errors }}</div>
+        </div>
+        <div class="form-group">
+          <label for="{{ form.email.id_for_label }}">Імейл</label>
+          {{ form.email }}
+          <div class="form-error">{{ form.email.errors }}</div>
+        </div>
+        <div class="form-group">
+          <label for="{{ form.password1.id_for_label }}">Пароль</label>
+          {{ form.password1 }}
+          <div class="form-error">{{ form.password1.errors }}</div>
+        </div>
+        <div class="form-group">
+          <label for="{{ form.password2.id_for_label }}">Пароль повтор</label>
+          {{ form.password2 }}
+          <div class="form-error">{{ form.password2.errors }}</div>
+        </div>
+
+
         <button type="submit">Зберегти</button>
     </form>
 </body>

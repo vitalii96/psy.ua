@@ -1,4 +1,6 @@
-from django.contrib.auth import logout
+from django.contrib import messages
+from django.contrib.auth import logout, authenticate
+from django.http import request
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.contrib.auth import login
@@ -13,10 +15,7 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.contrib.auth.mixins import LoginRequiredMixin
-
-
-def index(request):
-    return render(request, 'client_app/index.html')
+from django.contrib.auth.models import User
 
 
 def logout_view(request):
@@ -24,15 +23,28 @@ def logout_view(request):
     return redirect('/')
 
 
-class SignUp(LoginView):
-    template_name = 'client_app/sign_up.html'
-    authentication_form = SignUpForm
+def sign_in(request):
+    if request.method == 'GET':
+        form = SignUpForm()
+        return render(request, 'client_app/sign_up.html', {'form': form})
 
-    def form_valid(self, form):
-        # Авторизуйте користувача, викликавши метод login()
-        login(self.request, form.get_user())
-        # Після успішної авторизації, перенаправте користувача на сторінку, яку ви виберете
-        return redirect('home')
+    elif request.method == 'POST':
+        form = SignUpForm(request.POST)
+
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
+            if user:
+                login(request, user)
+                messages.success(request, f'Hi {username.title()}, welcome back!')
+                return redirect('home')
+            else:
+                form.add_error('password', "Невірне ім'я користувача, або пароль")
+
+
+        # form is not valid or user is not authenticated
+        return render(request, 'client_app/sign_up.html', {'form': form})
 
 
 class RegisterUser(CreateView):
@@ -41,11 +53,26 @@ class RegisterUser(CreateView):
     success_url = reverse_lazy('home')
 
     def form_valid(self, form):
-        response = super().form_valid(form)
-        user = form.save()  # Збереження нового користувача у базі даних
-        user.backend = 'django.contrib.auth.backends.ModelBackend'  # Використовуємо ModelBackend для автентифікації
-        login(self.request, user)  # Автоматичний вхід нового користувача
-        return response
+        # Перевірка, чи користувач з таким іменем вже існує
+        username = form.cleaned_data['username']
+        if User.objects.filter(username=username).exists():
+            form.add_error('username', 'Користувач з таким іменем вже існує.')
+            return self.form_invalid(form)
+
+        # Виклик `form.save(commit=False)` створює об'єкт користувача, але не зберігає його в базу даних
+        user = form.save(commit=False)
+
+        # Встановлюємо пароль для користувача
+        password = form.cleaned_data['password1']
+        user.set_password(password)
+
+        # Зберігаємо користувача в базу даних
+        user.save()
+
+        # Автоматичний вхід нового користувача
+        login(self.request, user, backend='django.contrib.auth.backends.ModelBackend')
+
+        return super().form_valid(form)
 
 
 @method_decorator(login_required(login_url='register'), name='dispatch')

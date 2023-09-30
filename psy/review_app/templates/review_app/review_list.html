@@ -12,7 +12,7 @@
     </ul>
 {% endfor %}
 
-{% if user.is_authenticated %}
+{% if client %}
 <div>
     <form id="add-review-form">
         {% csrf_token %}
