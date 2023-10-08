@@ -1,0 +1,48 @@
+{% load static %}
+	<head>
+		<title>Phantom by HTML5 UP</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+
+		<link rel="stylesheet" type="text/css" href="{% static 'blog/topics/css/fontawesome-all.min.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'blog/topics/css/main.css' %}">
+		<noscript><link rel="stylesheet" type="text/css" href="{% static 'blog/topics/css/noscript.css' %}"></noscript>
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
+					<div id="main">
+						<div class="inner">
+							<header>
+								<h1>Блог<br /></h1>
+								<p>Оберіть тематику, яка вас зацікавила, щоб перейти до списку постів</p>
+							</header>
+							<section class="tiles">
+							{% for topic in topics %}
+
+									<article class="{{ topic.color}}">
+										<span class="image">
+											<img src="{{ topic.profile_picture.url }}" alt="" height="326px" />
+										</span>
+										<a href="{{ topic.get_absolute_url }}">
+											<h2>{{ topic.title }}</h2>
+											<div class="content">
+												<p>{{ topic.description }}</p>
+											</div>
+										</a>
+									</article>
+
+							{% endfor %}
+								</section>
+						</div>
+					</div>
+			</div>
+
+		<!-- Scripts -->
+		<script src="{% static 'blog/topics/js/breakpoints.min.js' %}"></script>
+		<script src="{% static 'blog/topics/js/browser.min.js' %}"></script>
+		<script src="{% static 'blog/topics/js/jquery.min.js' %}"></script>
+		<script src="{% static 'blog/topics/js/main.js' %}"></script>
+		<script src="{% static 'blog/topics/js/util.js' %}"></script>
+
+	</body>

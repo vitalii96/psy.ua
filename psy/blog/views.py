@@ -7,6 +7,10 @@ from menu import menu
 
 menu = menu
 
+class ShowTopics(ListView):
+    model = Topic
+    template_name = 'blog/topics.html'
+    context_object_name = 'topics'
 
 class PostList(BlogMixin,ListView):
     model = Post
@@ -34,7 +38,7 @@ def pageNotFound(request, exeption):
 
 class PostsTopics(BlogMixin,ListView):
     model = Post
-    template_name = 'blog/post_list.html'
+    template_name = 'blog/posts.html'
     context_object_name = 'posts'
 
     def get_context_data(self, **kwargs):

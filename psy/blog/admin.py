@@ -5,11 +5,10 @@ from .models import *
 
 
 class PostAdmin(admin.ModelAdmin):
-    exclude = ('author',)
-    list_display = ('author', 'topic', 'title', 'is_published', 'get_html_photo', 'created_at')  # колонки, які відображаються в списку адмінки
+    list_display = ('author', 'psychologist','topic', 'title', 'is_published', 'get_html_photo', 'created_at')  # колонки, які відображаються в списку адмінки
     list_filter = ('topic',)  # сортування по колонці
     search_fields = ('topic__title', 'title')  # пошук по колонках
-    list_editable = ('topic', 'is_published')  # дозвіл на редагування поля відразу зі списку в адмінці
+    list_editable = ('topic', 'is_published', 'psychologist')  # дозвіл на редагування поля відразу зі списку в адмінці
     prepopulated_fields = {'slug': ('title',)}
 
     def get_html_photo(self, object):

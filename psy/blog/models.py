@@ -1,11 +1,23 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
-
+from psychologist_app.models import Psychologist
 
 class Topic(models.Model):
+    STATUS_CHOICES = (
+        ('style1', 'Рожевий'),
+        ('style2', 'Блакитний'),
+        ('style3', 'Бірюзовий'),
+        ('style4', 'Малиновий'),
+        ('style5', 'Фіолетовий'),
+        ('style6', 'Синій'),
+        ('none', 'Прозорий'),
+    )
     title = models.CharField(max_length=255, db_index=True, verbose_name='Назва')
-    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL', null=True )
+    description = models.CharField(max_length=255,verbose_name='Опис теми', null=True, blank=True)
+    profile_picture = models.ImageField(upload_to='topic_images/', verbose_name='Зображення', null=True, blank=True)
+    color = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pink')
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL', null=True)
 
     class Meta:
         verbose_name = 'Теми'
@@ -21,6 +33,8 @@ class Topic(models.Model):
 
 class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE,  verbose_name='Автор')
+    psychologist = models.ForeignKey(Psychologist, on_delete=models.CASCADE,  verbose_name='Автор посту', null=True, blank=True)
+    subtitle = models.CharField(max_length=255,verbose_name='Короткий опис', null=True, blank=True)
     topic = models.ForeignKey(Topic, on_delete=models.SET_NULL, null=True, verbose_name='Тема') #якщо буде видалено звязаний запис "Тема", то в дане поле буде записано NULL
     title = models.CharField(max_length=255, verbose_name='Заголовок')
     content = models.TextField(verbose_name='Текст')

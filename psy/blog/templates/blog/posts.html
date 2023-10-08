@@ -1,0 +1,66 @@
+{% load static %}
+<head>
+	<title>Future Imperfect by HTML5 UP</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<script src="{% static 'blog/posts/js/breakpoints.min.js' %}"></script>
+	<script src="{% static 'blog/posts/js/browser.min.js' %}"></script>
+	<script src="{% static 'blog/posts/js/jquery.min.js' %}"></script>
+	<script src="{% static 'blog/posts/js/main.js' %}"></script>
+	<script src="{% static 'blog/posts/js/util.js' %}"></script>
+
+	<link rel="stylesheet" type="text/css" href="{% static 'blog/posts/css/fontawesome-all.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'blog/posts/css/main.css' %}">
+	</head>
+	<body class="is-preload">
+			<div id="wrapper">
+					<div id="main">
+						<!-- Post -->
+						{% for post in posts %}
+							<article class="post">
+								<header>
+									<div class="title">
+										<h2><a href="{{post.get_absolute_url }}">{{ post.title }}</a></h2>
+										<p>{{ post.subtitle }}</p>
+									</div>
+									<div class="meta">
+										<time class="published" datetime="2015-11-01">{{ post.created_at|date:"d-m-Y H:i:s" }}</time>
+										<a href="{% url 'about' %}" class="author"><span class="name">{{ post.psychologist }}</span><img src="{{post.psychologist.profile_picture.url }}" alt="" /></a>
+									</div>
+								</header>
+								<a href="{{post.get_absolute_url }}" class="image featured"><img src="{{ post.profile_picture.url }}" alt="" /></a>
+								<p>{{ post.content|linebreaks|truncatewords:50 }}</p>
+								<footer>
+									<ul class="actions">
+										<li><a href="{{post.get_absolute_url }}" class="button large">Детальніше</a></li>
+									</ul>
+								</footer>
+							</article>
+						{% endfor %}
+						<!-- Pagination -->
+						{% if page_obj.has_other_pages %}
+								<ul class="actions pagination">
+									{% if page_obj.has_previous %}
+										<li><a href="?page={{ get_first_page_number }}" class="button large next">На початок</a></li>
+										<li><a href="?page={{ page_obj.previous_page_number }}" class="button large next">Назад</a></li>
+									{% endif %}
+
+									{% for p in paginator.page_range %}
+										{% if page_obj.number == p %}
+									<li ><p class="disabled button large previous">{{ p }}</p></li>
+										{% else %}
+											<li><a href="?page={{ p }}" class="button large next">{{ p }}</a></li>
+										{% endif %}
+
+									{% endfor %}
+									{% if page_obj.has_next %}
+										<li><a href="?page={{ page_obj.next_page_number }}" class="button large next">Далі</a></li>
+										<li><a href="?page={{ paginator.num_pages }}" class="button large next">В кінець</a></li>
+									{% endif %}
+								</ul>
+
+						{% endif %}
+					</div>
+			</div>
+	</body>
+</html>
