@@ -9,11 +9,11 @@ from psychologist_app.forms import HelpForm
 menu = menu
 
 
-def base():
+def base(request):
     context = {
         'menu': menu,
     }
-    return context
+    return render(request, template_name='psychologist_app/base.html', context=context)
 
 
 def index(request):
@@ -34,13 +34,12 @@ def index(request):
     else:
         form = HelpForm()
 
-    base_context = base()
+
     context = {
         'psychologist': psychologist,
         'content': content_main,
         'methodics': methodics,
         'form': form,
-        **base_context,
         'title': 'Головна сторінка',
     }
     return render(request, 'psychologist_app/index.html', context=context)

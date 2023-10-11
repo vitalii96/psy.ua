@@ -12,6 +12,12 @@ class ShowTopics(ListView):
     template_name = 'blog/topics.html'
     context_object_name = 'topics'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        title = 'Блог'  # Замініть "Ваш заголовок" на потрібний вам заголовок
+        context['title'] = title
+        return context
+
 class PostList(BlogMixin,ListView):
     model = Post
     template_name = 'blog/post_list.html'
@@ -44,7 +50,9 @@ class PostsTopics(BlogMixin,ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         topic_slug = self.kwargs['topic_slug']
+        title = 'БЛОГ'
         c_def = self.get_posts_context(topic_selected=topic_slug)
+        context['title'] = title
         return dict(list(context.items())+list(c_def.items()))
 
     def get_queryset(self):
