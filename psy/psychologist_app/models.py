@@ -73,9 +73,10 @@ class Sign(models.Model):
 
 class ContentItems(models.Model):
     title = models.TextField(verbose_name='Назва')
-    description = models.TextField(verbose_name='Опис')
+    description = models.TextField(verbose_name='Опис', null=True, blank=True)
     image = models.ImageField(upload_to='psychologist_profiles/', verbose_name='Фото', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    icons = models.CharField(max_length=30, verbose_name='Назва іконки', blank=True, null=True)
     sign = models.ForeignKey(Sign, on_delete=models.SET_NULL, null=True, verbose_name='Ознака')
 
     class Meta:

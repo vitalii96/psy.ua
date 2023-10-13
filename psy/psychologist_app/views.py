@@ -14,12 +14,18 @@ def base(request):
         'menu': menu,
     }
     return render(request, template_name='psychologist_app/base.html', context=context)
+def test(request):
+    context = {
+        'menu': menu,
+    }
+    return render(request, template_name='psychologist_app/test.html', context=context)
 
 
 def index(request):
     psychologist = Psychologist.objects.get(pk=1)
     content_main = ContentItems.objects.filter(sign__title='Основна')
     methodics = ContentItems.objects.filter(sign__title='Методика')
+    questions  = ContentItems.objects.filter(sign__title='Запит')
     if request.method == 'POST':
         form = HelpForm(request.POST)
         if form.is_valid():
@@ -39,6 +45,7 @@ def index(request):
         'psychologist': psychologist,
         'content': content_main,
         'methodics': methodics,
+        'questions': questions,
         'form': form,
         'title': 'Головна сторінка',
     }

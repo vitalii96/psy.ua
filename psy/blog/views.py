@@ -25,6 +25,8 @@ class PostList(BlogMixin,ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
+        title = ''  # Замініть "Ваш заголовок" на потрібний вам заголовок
+        context['title'] = title
         c_def = self.get_posts_context(title='Блог')
         return dict(list(context.items())+list(c_def.items()))
 
@@ -50,11 +52,18 @@ class PostsTopics(BlogMixin,ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         topic_slug = self.kwargs['topic_slug']
-        title = 'БЛОГ'
+        title = self.get_topic_title(topic_slug)  # Отримати назву теми
         c_def = self.get_posts_context(topic_selected=topic_slug)
         context['title'] = title
-        return dict(list(context.items())+list(c_def.items()))
+        return dict(list(context.items()) + list(c_def.items()))
 
     def get_queryset(self):
         return Post.objects.filter(topic__slug=self.kwargs['topic_slug'], is_published=True).select_related('topic', 'author')
+
+    def get_topic_title(self, topic_slug):
+        try:
+            topic = Topic.objects.get(slug=topic_slug)
+            return topic.title
+        except Topic.DoesNotExist:
+            return None  # Обробка ситуації, коли тему не знайдено
 

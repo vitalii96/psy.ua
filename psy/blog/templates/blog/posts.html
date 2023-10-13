@@ -1,20 +1,10 @@
+{% extends 'psychologist_app/base.html' %}
 {% load static %}
-<head>
-	<title>Future Imperfect by HTML5 UP</title>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<script src="{% static 'blog/posts/js/breakpoints.min.js' %}"></script>
-	<script src="{% static 'blog/posts/js/browser.min.js' %}"></script>
-	<script src="{% static 'blog/posts/js/jquery.min.js' %}"></script>
-	<script src="{% static 'blog/posts/js/main.js' %}"></script>
-	<script src="{% static 'blog/posts/js/util.js' %}"></script>
-
-	<link rel="stylesheet" type="text/css" href="{% static 'blog/posts/css/fontawesome-all.min.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'blog/posts/css/main.css' %}">
-	</head>
-	<body class="is-preload">
-			<div id="wrapper">
-					<div id="main">
+{% block name %} {{ title }} {% endblock %}}
+{% block content %}
+<header class="main">
+										<h1>Elements</h1>
+									</header>
 						<!-- Post -->
 						{% for post in posts %}
 							<article class="post">
@@ -60,7 +50,5 @@
 								</ul>
 
 						{% endif %}
-					</div>
-			</div>
-	</body>
-</html>
+
+{% endblock %}
