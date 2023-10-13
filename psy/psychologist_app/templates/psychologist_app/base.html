@@ -21,7 +21,7 @@
 
 							<!-- Header -->
 								<header id="header">
-									<a href="index.html" class="logo"><strong></strong><h2>{% block name%}Головна сторінка {% endblock %}</h2></a>
+									<a href="{% block link %} {% url 'home' %} {% endblock %}" class="logo"><strong></strong><h2>{% block name%}Головна сторінка {% endblock %}</h2></a>
 									<ul class="icons">
 										<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
 										<li><a href="#" class="icon brands fa-viber"><span class="label">Snapchat</span></a></li>

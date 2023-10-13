@@ -1,51 +1,54 @@
 {% extends 'psychologist_app/base.html' %}
 {% load static %}
-{% block name %} {{ title }} {% endblock %}}
+{% block link %}{% url 'topics' %}{% endblock %}
+{% block name %} {{ title }}{% endblock %}}
 {% block content %}
-<header class="main">
-										<h1>Elements</h1>
-									</header>
-						<!-- Post -->
-						{% for post in posts %}
-							<article class="post">
-								<header>
-									<div class="title">
-										<h2><a href="{{post.get_absolute_url }}">{{ post.title }}</a></h2>
-										<p>{{ post.subtitle }}</p>
-									</div>
-									<div class="meta">
-										<time class="published" datetime="2015-11-01">{{ post.created_at|date:"d-m-Y H:i:s" }}</time>
-										<a href="{% url 'about' %}" class="author"><span class="name">{{ post.psychologist }}</span><img src="{{post.psychologist.profile_picture.url }}" alt="" /></a>
-									</div>
-								</header>
-								<a href="{{post.get_absolute_url }}" class="image featured"><img src="{{ post.profile_picture.url }}" alt="" /></a>
-								<p>{{ post.content|linebreaks|truncatewords:50 }}</p>
-								<footer>
-									<ul class="actions">
-										<li><a href="{{post.get_absolute_url }}" class="button large">Детальніше</a></li>
-									</ul>
-								</footer>
-							</article>
-						{% endfor %}
+<br>
+<h2>{{ topic }}</h2>
+
+<!-- Post -->
+{% for post in posts %}
+<section id="banner">
+	<div class="content">
+		<header>
+			<a href="{{post.get_absolute_url}}"><h2>{{post.title}}</h2></a>
+			<p>{{post.subtitle}}</p>
+		</header>
+		<p>{{ post.content|linebreaks|truncatewords:60 }}</p>
+		<p>{{ post.created_at }} <a href="{% url 'about' %}">{{ post.psychologist }}</a></p>
+		<ul class="actions">
+			<li><a href="{{ post.get_absolute_url }}" class="button big">Детальніше</a></li>
+		</ul>
+	</div>
+		<span class="image object">
+			<img src="{{ post.profile_picture.url }}" alt=""
+     		style="transition: transform 0.2s ease-out; overflow: hidden;"
+     		class="image featured" onmouseover="this.style.transform = 'scale(1.05)';"
+     		onmouseout="this.style.transform = 'scale(1)';" />
+		</span>
+</section>
+{% endfor %}
 						<!-- Pagination -->
 						{% if page_obj.has_other_pages %}
-								<ul class="actions pagination">
-									{% if page_obj.has_previous %}
-										<li><a href="?page={{ get_first_page_number }}" class="button large next">На початок</a></li>
-										<li><a href="?page={{ page_obj.previous_page_number }}" class="button large next">Назад</a></li>
+								<ul class="pagination">
+									{% if not page_obj.has_previous %}
+										<span class="button disabled">Назад</span>
+									{% else %}
+										<li><a href="?page={{ page_obj.previous_page_number }}" class="button">Назад</a></li>
 									{% endif %}
 
 									{% for p in paginator.page_range %}
 										{% if page_obj.number == p %}
-									<li ><p class="disabled button large previous">{{ p }}</p></li>
+									<li><a class="page active">{{ p }}</a></li>
 										{% else %}
-											<li><a href="?page={{ p }}" class="button large next">{{ p }}</a></li>
+											<li><a href="?page={{ p }}" class="page">{{ p }}</a></li>
 										{% endif %}
 
 									{% endfor %}
 									{% if page_obj.has_next %}
-										<li><a href="?page={{ page_obj.next_page_number }}" class="button large next">Далі</a></li>
-										<li><a href="?page={{ paginator.num_pages }}" class="button large next">В кінець</a></li>
+										<li><a href="?page={{ page_obj.next_page_number }}" class="button">Далі</a></li>
+									{% else %}
+										<span class="button disabled">Далі</span>
 									{% endif %}
 								</ul>
 

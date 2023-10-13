@@ -100,6 +100,7 @@
 					// Toggle.
 						$sidebar.toggleClass('inactive');
 
+
 				});
 
 		// Events.

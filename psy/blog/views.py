@@ -52,8 +52,10 @@ class PostsTopics(BlogMixin,ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         topic_slug = self.kwargs['topic_slug']
-        title = self.get_topic_title(topic_slug)  # Отримати назву теми
+        topic = self.get_topic_title(topic_slug)  # Отримати назву теми
+        title = 'БЛОГ'
         c_def = self.get_posts_context(topic_selected=topic_slug)
+        context['topic'] = topic
         context['title'] = title
         return dict(list(context.items()) + list(c_def.items()))
 
