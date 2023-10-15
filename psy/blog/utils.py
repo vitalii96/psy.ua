@@ -10,7 +10,7 @@ menu = [
 
 
 class BlogMixin:
-    paginate_by = 1
+    paginate_by = 5
     def get_posts_context(self, **kwargs):
         context = kwargs
         context['menu'] = menu

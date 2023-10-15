@@ -6,7 +6,7 @@ from .models import *
 from menu import menu
 
 menu = menu
-
+title = 'Блог'
 class ShowTopics(ListView):
     model = Topic
     template_name = 'blog/topics.html'
@@ -18,30 +18,16 @@ class ShowTopics(ListView):
         context['title'] = title
         return context
 
-class PostList(BlogMixin,ListView):
-    model = Post
-    template_name = 'blog/post_list.html'
-    context_object_name = 'posts'
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        title = ''  # Замініть "Ваш заголовок" на потрібний вам заголовок
-        context['title'] = title
-        c_def = self.get_posts_context(title='Блог')
-        return dict(list(context.items())+list(c_def.items()))
-
-    def get_queryset(self):
-        return Post.objects.filter(is_published=True).select_related('topic','author') # жадібнй запит
-
 
 class ShowPost(DetailView):
     model = Post
     template_name = 'blog/post_detail.html'
     slug_url_kwarg = 'post_slug'
 
-
-def pageNotFound(request, exeption):
-    return HttpResponse(f'Сторінку не знайдено')
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = title
+        return context
 
 
 class PostsTopics(BlogMixin,ListView):
@@ -53,7 +39,6 @@ class PostsTopics(BlogMixin,ListView):
         context = super().get_context_data(**kwargs)
         topic_slug = self.kwargs['topic_slug']
         topic = self.get_topic_title(topic_slug)  # Отримати назву теми
-        title = 'БЛОГ'
         c_def = self.get_posts_context(topic_selected=topic_slug)
         context['topic'] = topic
         context['title'] = title
@@ -69,3 +54,5 @@ class PostsTopics(BlogMixin,ListView):
         except Topic.DoesNotExist:
             return None  # Обробка ситуації, коли тему не знайдено
 
+def pageNotFound(request, exeption):
+    return HttpResponse(f'Сторінку не знайдено')

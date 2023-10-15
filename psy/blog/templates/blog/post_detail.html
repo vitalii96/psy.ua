@@ -1,55 +1,21 @@
 {% extends 'psychologist_app/base.html' %}
 {% load static %}
-<head>
-		<title>Single - Future Imperfect by HTML5 UP</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-        <script src="{% static 'blog/posts/js/breakpoints.min.js' %}"></script>
-	<script src="{% static 'blog/posts/js/browser.min.js' %}"></script>
-	<script src="{% static 'blog/posts/js/jquery.min.js' %}"></script>
-	<script src="{% static 'blog/posts/js/main.js' %}"></script>
-	<script src="{% static 'blog/posts/js/util.js' %}"></script>
+{% block link %}{% url 'topics' %}{% endblock %}
 
-	<link rel="stylesheet" type="text/css" href="{% static 'blog/posts/css/fontawesome-all.min.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'blog/posts/css/main.css' %}">
-	</head>
-	<body class="single is-preload">
+{% block name %} {{ title }}{% endblock %}}
 
-		<!-- Wrapper -->
-			<div id="wrapper">
-				<!-- Main -->
-					<div id="main">
-
-						<!-- Post -->
-							<article class="post">
-								<header>
-									<div class="title">
-                                        <h2><a href="{% url 'topic' post.topic.slug %}">{{ post.topic }}</a></h2>
-										<p>{{ post.title }}</p>
-									</div>
-									<div class="meta">
-										<time class="published" datetime="2015-11-01">{{ post.created_at|date:"d-m-Y H:i:s" }}</time>
-										<a href="{% url 'about' %}" class="author"><span class="name">{{ post.psychologist }}</span><img src="{{post.psychologist.profile_picture.url }}" alt="" /></a>
-									</div>
-								</header>
-								<span class="image featured"><img src="{{ post.profile_picture.url }}" alt="" /></span>
-								<p>{{ post.subtitle }}</p>
-								<p>{{ post.content }}</p>
-							</article>
-
-					</div>
-
-				<!-- Footer -->
-					<section id="footer">
-						<ul class="icons">
-							<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-							<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-							<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-							<li><a href="#" class="icon solid fa-rss"><span class="label">RSS</span></a></li>
-							<li><a href="#" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
-						</ul>
-						<p class="copyright">&copy; Untitled. Design: <a href="http://html5up.net">HTML5 UP</a>. Images: <a href="http://unsplash.com">Unsplash</a>.</p>
-					</section>
-
-			</div>
-	</body>
+{% block content %}
+<br>
+<h2><a href="{{ post.topic.get_absolute_url }}">{{ post.topic }}</a></h2>
+    <p>
+		<span class="image left">
+			<img width="10%" height="20%" src="{{ post.profile_picture.url }}" alt=""
+     		style="transition: transform 0.2s ease-out; overflow: hidden;"
+     		class="image featured" onmouseover="this.style.transform = 'scale(1.05)';"
+     		onmouseout="this.style.transform = 'scale(1)';" />
+		</span>
+		<h2>{{post.title}}</h2>
+	{{ post.content|linebreaksbr }}
+	</p>
+<p>{{ post.created_at }} <a href="{% url 'about' %}">{{ post.psychologist }}</a></p>
+{% endblock %}
