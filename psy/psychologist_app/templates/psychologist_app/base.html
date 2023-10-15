@@ -46,12 +46,11 @@
 									<ul>
 										<li><a href="{% url 'home' %}">Головна сторінка</a></li>
 										<li><a href="{% url 'topics' %}">Блог</a></li>
-										<li><a href="elements.html">Про мене</a></li>
 										<li>
-											<span class="opener">Освіта</span>
+											<span class="opener">Про мене</span>
 											<ul>
-												<li><a href="#">Lorem Dolor</a></li>
-												<li><a href="#">Ipsum Adipiscing</a></li>
+												<li><a href="#">Освіта</a></li>
+												<li><a href="#">Контактна інформація</a></li>
 												<li><a href="#">Tempus Magna</a></li>
 												<li><a href="#">Feugiat Veroeros</a></li>
 											</ul>
@@ -62,16 +61,18 @@
 							<!-- Section -->
 								<section>
 									<header class="major">
-										<h2>Новини</h2>
+										<h2>Останні публікації</h2>
 									</header>
+									{% for post in last_posts %}
 									<div class="mini-posts">
 										<article>
-											<a href="#" class="image"><img src="images/pic07.jpg" alt="" /></a>
-											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
+											<a href="{{ post.get_absolute_url }}" class="image"><h4>{{ post.title }}</h4><img src="{{ post.profile_picture.url }}" alt="" /></a>
+											<p>{{ post.content|linebreaks|truncatewords:20 }}</p>
 										</article>
 									</div>
+									{% endfor %}
 									<ul class="actions">
-										<li><a href="#" class="button">More</a></li>
+										<li><a href="#" class="button">Більше постів</a></li>
 									</ul>
 								</section>
 
@@ -80,10 +81,11 @@
 									<header class="major">
 										<h2>Контактна іформація</h2>
 									</header>
-									<p>Контактна інформація</p>
 									<ul class="contact">
-										<li class="icon solid fa-envelope"><a href="#">information@untitled.tld</a></li>
-										<li class="icon solid fa-phone">(000) 000-0000</li>
+										<li class="icon solid fa-envelope">{{ psychologist.user.email }}</li>
+										{% for phone in psychologist.contact_numbers %}
+										<li class="icon solid fa-phone">{{ phone }}</li>
+										{% endfor %}
 										<li class="icon solid fa-home">1234 Somewhere Road #8254<br />
 										Nashville, TN 00000-0000</li>
 									</ul>

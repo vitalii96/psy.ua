@@ -1,34 +1,41 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseNotFound, Http404
-from menu import menu
+from django.views import View
 from telegram_bot_app.bot import SendInformationForm
 from .models import Psychologist, ContentItems
 from blog.models import Post
 from psychologist_app.forms import HelpForm
-
-menu = menu
-
-
-def base(request):
-    psychologist = Psychologist.objects.get(pk=1)
-    context = {
-        'psychologist': psychologist,
-        'menu': menu,
-    }
-    return render(request, template_name='psychologist_app/base.html', context=context)
-# def test(request):
-#     context = {
-#         'menu': menu,
-#     }
-#     return render(request, template_name='psychologist_app/test.html', context=context)
+from .utils  import DataMixin
 
 
-def index(request):
-    psychologist = Psychologist.objects.get(pk=1)
-    content_main = ContentItems.objects.filter(sign__title='Основна')
-    methodics = ContentItems.objects.filter(sign__title='Методика')
-    questions  = ContentItems.objects.filter(sign__title='Запит')
-    if request.method == 'POST':
+class Base(DataMixin, View):
+    template_name = 'psychologist_app/base.html'
+    def get_context_data(self, request):
+        context = self.get_main_information()
+        return render(request, self.template_name, context)
+
+class Index (DataMixin,View):
+    template_name = 'psychologist_app/index.html'
+
+    def get(self, request):
+        content_main = ContentItems.objects.filter(sign__title='Основна')
+        methodics = ContentItems.objects.filter(sign__title='Методика')
+        questions = ContentItems.objects.filter(sign__title='Запит')
+        form = HelpForm()
+
+        context = {
+            'content': content_main,
+            'methodics': methodics,
+            'questions': questions,
+            'form': form,
+            'psychologist': self.get_main_information()['psychologist'],
+            'title': 'Головна сторінка',
+            'last_posts': self.get_main_information()['last_posts'],
+        }
+
+        return render(request, self.template_name, context=context)
+
+    def post(self, request):
         form = HelpForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data['name']
@@ -39,34 +46,18 @@ def index(request):
             form = HelpForm()
             return redirect('home')
 
-    else:
-        form = HelpForm()
 
-
-    context = {
-        'content': content_main,
-        'methodics': methodics,
-        'questions': questions,
-        'form': form,
-        'psychologist': psychologist,
-        'title': 'Головна сторінка',
-    }
-    return render(request, 'psychologist_app/index.html', context=context)
 
 
 def about(request):
-    psylogist = Psychologist.objects.get(pk=1)
     context = {
-        'menu': menu,
-        'psylogist': psylogist,
+        'psylogist': psychologist,
     }
     return render(request, 'psychologist_app/about.html', context=context)
 
 
 def contact(request):
-    psylogist = Psychologist.objects.get(pk=1)
     context = {
-        'menu': menu,
-        'psylogist': psylogist,
+        'psylogist': psychologist,
     }
     return render(request, 'psychologist_app/contact.html', context=context)
