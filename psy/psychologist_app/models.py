@@ -42,14 +42,14 @@ class Certificate(models.Model):
 class Psychologist(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Користувач")
     description = models.TextField(verbose_name='Про психолога')
-    certificates = models.ManyToManyField('Certificate', verbose_name='Сертифікати')
-    diplomas = models.ManyToManyField('Diploma', verbose_name='Дипломи')
+    certificates = models.ManyToManyField('Certificate', verbose_name='Сертифікати', null=True, blank=True)
+    diplomas = models.ManyToManyField('Diploma', verbose_name='Дипломи', null=True, blank=True)
     contact_numbers = ArrayField(models.CharField(max_length=20), verbose_name='Номери телефонів')
     email = models.EmailField()# закоментувати, в базовій моделі юзера вже є поле під мило
     profile_picture = models.ImageField(upload_to='psychologist_profiles/', verbose_name='Фото')
-    telegram = models.CharField(max_length=20, verbose_name='Телеграм', null=True)
-    instagram = models.CharField(max_length=255, verbose_name='Інстаграм', null=True)
-    facebook = models.CharField(max_length=255, verbose_name='Фейсбук', null=True)
+    telegram = models.CharField(max_length=20, verbose_name='Телеграм', null=True, blank=True)
+    instagram = models.CharField(max_length=255, verbose_name='Інстаграм', null=True, blank=True)
+    facebook = models.CharField(max_length=255, verbose_name='Фейсбук', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
