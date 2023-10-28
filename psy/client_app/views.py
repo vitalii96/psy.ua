@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-
+from django.contrib.auth import logout
 
 def logout_view(request):
     logout(request)
@@ -74,7 +74,7 @@ class RegisterUser(CreateView):
         return super().form_valid(form)
 
 
-@method_decorator(login_required(login_url='register'), name='dispatch')
+@method_decorator(login_required(login_url='sig_up'), name='dispatch')
 class SessionsList(ListView, LoginRequiredMixin):
     model = SessionRecord
     template_name = 'client_app/client_session.html'
@@ -83,7 +83,6 @@ class SessionsList(ListView, LoginRequiredMixin):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['menu'] = menu
         return context
 
     def get_queryset(self, ):

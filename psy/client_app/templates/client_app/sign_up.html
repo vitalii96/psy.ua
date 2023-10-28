@@ -24,9 +24,12 @@
                     <input type="submit" value="Увійти" class="fit"/>
                 </div>
                 <div class="col-9">
-                    <a href="{% url 'register' %}"><input type="button" value="Зареєструватись" class="primary fit"/></a>
+                    <a href="{% url 'register' %}" class=""><input type="button" value="Зареєструватись" class="primary fit"/></a>
                 </div><div class="col-9">
-                <a href="{% provider_login_url 'google' %}?process=login"><input type="button" value="Увійти з Google" class="primary fit"/></a>
+                <a href="{% provider_login_url 'google' %}?process=login" >
+                    <button  type="button"  class="fit"/>
+                    <span class="icon brands fa-google"> Увійти з Google</span>
+                </a>
                 </div>
             </div>
         </form>

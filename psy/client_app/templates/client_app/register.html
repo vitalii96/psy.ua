@@ -45,10 +45,13 @@
           <div class="form-error">{{ form.password2.errors }}</div>
                 </div>
                 <div class="col-6">
-                    <input type="submit" value="Зареєструватись" class="fit"/>
+                    <input type="submit" value="Зареєструватись" class="primary fit"/>
                 </div>
               <div class="col-6">
-                <a href="{% provider_login_url 'google' %}?process=login"><input type="button" value="Увійти з Google" class="primary fit"/></a>
+                <a href="{% provider_login_url 'google' %}?process=login" >
+                    <button  type="button"  class="fit"/>
+                    <span class="icon brands fa-google"> Увійти з Google</span>
+                </a>
                 </div>
             </div>
         </form>

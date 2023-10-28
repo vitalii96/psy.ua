@@ -1,11 +1,14 @@
+{% extends 'psychologist_app/base.html' %}
+{% block content %}
 <h1>Запис на сесію</h1>
-    <h2>Запис на сесію</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        {% if not client %}
-            <h2>Створення клієнта</h2>
-            {{ client_form.as_p }}
-        {% endif %}
-        <input type="submit" value="Зберегти">
-    </form>
+        <h2>Запис на сесію</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            {% if not client %}
+                <h2>Створення клієнта</h2>
+                {{ client_form.as_p }}
+            {% endif %}
+            <input type="submit" value="Зберегти">
+        </form>
+{% endblock %}

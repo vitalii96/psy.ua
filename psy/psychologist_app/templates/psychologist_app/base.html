@@ -42,6 +42,7 @@
 								<nav id="menu">
 									<header class="major">
 										<h2>Меню</h2>
+										<h3>{{user.username}}</h3>
 									</header>
 									<ul>
 										<li><a href="{% url 'home' %}">Головна сторінка</a></li>
@@ -54,7 +55,12 @@
 												<li><a href="{% url 'contact' %}">Контактна інформація</a></li>
 											</ul>
 										</li>
+										{% if user.is_authenticated %}
+										<li><a href="{% url 'logout' %}">Вийти</a></li>
+										<li><a href="{% url 'profile' %}">Кабінет</a></li>
+										{% else %}
 										<li><a href="{% url 'sig_up' %}">Увійти</a></li>
+										{% endif %}
 									</ul>
 								</nav>
 

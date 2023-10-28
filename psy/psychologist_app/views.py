@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.views import View
+from django.contrib.auth import logout
 from telegram_bot_app.bot import SendInformationForm
 from .models import Psychologist, ContentItems
 from blog.models import Post
@@ -12,6 +13,7 @@ class Base(DataMixin, View):
     template_name = 'psychologist_app/base.html'
     def get_context_data(self, request):
         context = self.get_main_information()
+        context['user'] = request.user
         return render(request, self.template_name, context)
 
 class Index (DataMixin,View):
