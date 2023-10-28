@@ -1,17 +1,11 @@
 from django.contrib import messages
-from django.contrib.auth import logout, authenticate
-from django.http import request
+from django.contrib.auth import logout, authenticate,login
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
-from django.contrib.auth import login
 from django.views.generic import CreateView, ListView
-from menu import menu
-from psychologist_app.forms import RegisterUserForm
 from client_app.forms import *
 from client_app.models import Client, SessionRecord
-from django.utils import timezone
 from django.views import View
-from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -59,6 +53,11 @@ class RegisterUser(CreateView):
             form.add_error('username', 'Користувач з таким іменем вже існує.')
             return self.form_invalid(form)
 
+        password1 = form.cleaned_data['password1']
+        password2 = form.cleaned_data['password2']
+        if password1 != password2:
+            form.add_error('password2', 'Паролі не співпадають.')
+            return self.form_invalid(form)
         # Виклик `form.save(commit=False)` створює об'єкт користувача, але не зберігає його в базу даних
         user = form.save(commit=False)
 

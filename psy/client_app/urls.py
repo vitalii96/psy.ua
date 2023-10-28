@@ -11,4 +11,5 @@ urlpatterns = [
     path('sessions/', SessionsList.as_view(), name='sessions'),
     path('profile/', ProfileView.as_view(), name='profile'),
     path('edit_profile/', edit_profile, name='edit_profile'),
+
 ]

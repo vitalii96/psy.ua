@@ -7,6 +7,7 @@ urlpatterns = [
     path('', Index.as_view(), name='home'),
     path('about/', about, name='about'),
     path('contact/', contact, name='contact'),
+    path('education/', education, name='education'),
     # path('base/', Base.as_view(), name='base'),
     # path('test/', test, name='test'),
 ]

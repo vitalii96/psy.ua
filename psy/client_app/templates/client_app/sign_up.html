@@ -1,40 +1,38 @@
+{% extends 'psychologist_app/base.html' %}
+{% load static %}
+{% block head %}
+{% endblock%}
+{% block name %}
+Вхід
+{% endblock%}
+
 {% load static %}
 {% load socialaccount %}
-
-<html lang="en" data-bs-theme="dark">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Вхід</title>
-
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sign-in/">
-    <link rel="stylesheet" type="text/css" href="{% static 'client_app/sign-in.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'client_app/bootstrap.min.css' %}">
-  </head>
-  <body class="d-flex align-items-center py-4 bg-body-tertiary">
-    <main class="form-signin w-100 m-auto">
-      <form method="post">
-        {% csrf_token %}
-
-        <h1 class="h3 mb-3 fw-normal">Вхід</h1>
-        <div class="form-group">
-          <label for="{{ form.username.id_for_label }}">Ім'я користувача</label>
-          {{ form.username }}
-        </div>
-        <div class="form-group">
-          <label for="{{ form.password.id_for_label }}">Пароль</label>
-          {{ form.password }}
-          <div class="form-error">{{ form.password.errors }}</div>
-        </div>
-        <div>
-          <div class="d-grid gap-2">
-            <button class="btn btn-primary" type="submit">Увійти</button>
-            <a href="{% url 'register' %}"><button class="btn btn-primary w-100 py-2" type="button">Зареєструватись</button></a>
-            <a href="{% provider_login_url 'google' %}?process=login"><button class="btn btn-primary w-100 py-2" type="button" >Увійти з Google</button></a>
-          </div>
-      </div>
-      </form>
-    </main>
-    <script src="{% static 'assets/dist/js/bootstrap.bundle.min.js' %}"></script>
-  </body>
-</html>
+{% block content %}
+<section id="banner">
+    <div class="content">
+        <form method="post" action="#">
+            {% csrf_token %}
+            <div class="row gtr-uniform">
+                <div class="col-9">
+                    <label>Логін</label>{{ form.username }}
+                </div>
+                <div class="col-9">
+                    <label>Пароль</label>{{ form.password }}
+                </div>
+                <div class="col-9">
+                    <input type="submit" value="Увійти" class="fit"/>
+                </div>
+                <div class="col-9">
+                    <a href="{% url 'register' %}"><input type="button" value="Зареєструватись" class="primary fit"/></a>
+                </div><div class="col-9">
+                <a href="{% provider_login_url 'google' %}?process=login"><input type="button" value="Увійти з Google" class="primary fit"/></a>
+                </div>
+            </div>
+        </form>
+    </div>
+    <span class="image object">
+		asdasdsadsadsadasdsad
+	</span>
+</section>
+{% endblock %}

@@ -46,15 +46,15 @@
 									<ul>
 										<li><a href="{% url 'home' %}">Головна сторінка</a></li>
 										<li><a href="{% url 'topics' %}">Блог</a></li>
-										<li><a href="{% url 'sig_up' %}">Блог</a></li>
 										<li>
 											<span class="opener">Про мене</span>
 											<ul>
-												<li><a href="#">Освіта</a></li>
-												<li><a href="#">Контактна інформація</a></li>
-												<li><a href="#">Feugiat Veroeros</a></li>
+												<li><a href="{% url 'about' %}">Основне</a></li>
+												<li><a href="{% url 'education' %}">Освіта</a></li>
+												<li><a href="{% url 'contact' %}">Контактна інформація</a></li>
 											</ul>
 										</li>
+										<li><a href="{% url 'sig_up' %}">Увійти</a></li>
 									</ul>
 								</nav>
 

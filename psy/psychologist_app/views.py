@@ -47,7 +47,11 @@ class Index (DataMixin,View):
             return redirect('home')
 
 
-
+def education(request):
+    context = {
+        'psylogist': psychologist,
+    }
+    return render(request, 'psychologist_app/education.html', context=context)
 
 def about(request):
     context = {
