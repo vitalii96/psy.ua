@@ -10,6 +10,6 @@ urlpatterns = [
     path('session_record/', SessionRecordView.as_view(), name='session_record'),
     path('sessions/', SessionsList.as_view(), name='sessions'),
     path('profile/', ProfileView.as_view(), name='profile'),
-    path('edit_profile/', edit_profile, name='edit_profile'),
+    path('edit_profile/', EditProfile.as_view(), name='edit_profile'),
 
 ]

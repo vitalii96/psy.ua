@@ -1,19 +1,12 @@
 from django.db.models import Count
 from django.core.cache import cache
 from .models import Topic, Post
-menu = [
-    {'title': 'Контакти', 'url_name': 'contact'},
-    {'title': 'Про мене', 'url_name': 'about'},
-    {'title': 'Відгуки', 'url_name': 'reviews'},
-    {'title': 'Блог', 'url_name': 'posts'},
-]
 
 
 class BlogMixin:
     paginate_by = 5
     def get_posts_context(self, **kwargs):
         context = kwargs
-        context['menu'] = menu
         # Включення кешування вибірки
         # topics = cache.get('topics')
         # if not topics:

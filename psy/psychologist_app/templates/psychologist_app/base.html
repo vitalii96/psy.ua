@@ -88,8 +88,8 @@
 										<h2>Контактна іформація</h2>
 									</header>
 									<ul class="contact">
-										<li class="icon solid fa-envelope">{{ psychologist.user.email }}</li>
-										{% for phone in psychologist.contact_numbers %}
+										<li class="icon solid fa-envelope">{{ psychologist_email }}</li>
+										{% for phone in psychologist_phone_numbers %}
 										<li class="icon solid fa-phone">{{ phone }}</li>
 										{% endfor %}
 										<li class="icon solid fa-home">1234 Somewhere Road #8254<br />

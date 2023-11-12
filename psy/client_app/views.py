@@ -1,16 +1,16 @@
 from django.contrib import messages
-from django.contrib.auth import logout, authenticate,login
+from django.contrib.auth import logout, authenticate, login
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView
-from client_app.forms import *
-from client_app.models import Client, SessionRecord
 from django.views import View
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from django.contrib.auth import logout
+from client_app.forms import *
+from client_app.models import Client, SessionRecord
+from psychologist_app.utils import DataMixin
+
 
 def logout_view(request):
     logout(request)
@@ -35,7 +35,6 @@ def sign_in(request):
                 return redirect('home')
             else:
                 form.add_error('password', "Невірне ім'я користувача, або пароль")
-
 
         # form is not valid or user is not authenticated
         return render(request, 'client_app/sign_up.html', {'form': form})
@@ -75,7 +74,7 @@ class RegisterUser(CreateView):
 
 
 @method_decorator(login_required(login_url='sig_up'), name='dispatch')
-class SessionsList(ListView, LoginRequiredMixin):
+class SessionsList(DataMixin,ListView):
     model = SessionRecord
     template_name = 'client_app/client_session.html'
     context_object_name = 'sessions'
@@ -83,6 +82,8 @@ class SessionsList(ListView, LoginRequiredMixin):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
+        mixin_context = self.get_main_information()
+        context.update(mixin_context)
         return context
 
     def get_queryset(self, ):
@@ -110,7 +111,7 @@ class SessionsList(ListView, LoginRequiredMixin):
 
 
 @method_decorator(login_required(login_url='register'), name='dispatch')
-class SessionRecordView(View):
+class SessionRecordView(DataMixin, View):
     template_name = 'client_app/session_record.html'  # Вкажіть ім'я вашого шаблону
 
     # Додаємо декоратор для перевірки авторизації користувача
@@ -120,12 +121,26 @@ class SessionRecordView(View):
             client = Client.objects.get(user=user)
             form = SessionRecordForm(initial={'client': client})
             client_form = None
+            context = {
+                'form': form,
+                'client': client,
+                'client_form': client_form,
+            }
+            mixin_context = self.get_main_information()
+            context.update(mixin_context)
         except Client.DoesNotExist:
             client = None
             form = SessionRecordForm()
             client_form = ClientCreateForm()
+            context = {
+                'form': form,
+                'client': client,
+                'client_form': client_form,
+            }
+            mixin_context = self.get_main_information()
+            context.update(mixin_context)
 
-        return render(request, self.template_name, {'form': form, 'client': client, 'client_form': client_form})
+        return render(request, self.template_name, context)
 
     def post(self, request):
         user = request.user
@@ -155,22 +170,37 @@ class SessionRecordView(View):
 
 
 @method_decorator(login_required(login_url='register'), name='dispatch')
-class ProfileView(View):
+class ProfileView(DataMixin, View):
     template_name = 'client_app/profile.html'
 
     def get(self, request):
-        return render(request, self.template_name)
+        context = self.get_main_information()
+        return render(request, self.template_name, context)
+@method_decorator(login_required(login_url='register'), name='dispatch')
+class EditProfile(DataMixin,View):
+    template_name = 'client_app/edit_profile.html'
 
-@login_required
-def edit_profile(request):
-    user = request.user
+    def get(self, request):
+        user = request.user
+        form = UserProfileForm(instance=user)
+        context = {
+            'form': form
+        }
+        mixin_context = self.get_main_information()
+        context.update(mixin_context)
+        return render(request, self.template_name, context)
 
-    if request.method == 'POST':
+    def post(self, request):
+        user = request.user
         form = UserProfileForm(request.POST, instance=user)
+        context = {
+            'form': form
+        }
+        mixin_context = self.get_main_information()
+        context.update(mixin_context)
         if form.is_valid():
             form.save()
             return redirect('profile')  # Перенаправити користувача на сторінку профілю після збереження
-    else:
-        form = UserProfileForm(instance=user)
+        return render(request,  self.template_name, context)
 
-    return render(request, 'client_app/edit_profile.html', {'form': form})
+

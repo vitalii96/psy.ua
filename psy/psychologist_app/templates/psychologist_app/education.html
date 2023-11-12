@@ -7,7 +7,7 @@
 {% block content %}
 <br>
 <h1>Дипломи</h1>
-{% for diploma in psychologist.diplomas.all %}
+{% for diploma in diplomas %}
 <section id="banner">
 	<div class="content">
 		<header>
@@ -27,7 +27,7 @@
 </section>
 {% endfor %}
 <h1>Сертифікати</h1>
-{% for certificate in psychologist.certificates.all %}
+{% for certificate in certificates %}
 <section id="banner">
 	<div class="content">
 

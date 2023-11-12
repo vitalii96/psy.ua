@@ -1,13 +1,11 @@
 from django.http import Http404
 from django.shortcuts import render, HttpResponse, get_object_or_404
 from django.views.generic import ListView, DetailView
+from psychologist_app.utils import DataMixin
 from .utils import *
 from .models import *
-from menu import menu
-
-menu = menu
 title = 'Блог'
-class ShowTopics(ListView):
+class ShowTopics(DataMixin,ListView):
     model = Topic
     template_name = 'blog/topics.html'
     context_object_name = 'topics'
@@ -16,10 +14,12 @@ class ShowTopics(ListView):
         context = super().get_context_data(**kwargs)
         title = 'Блог'  # Замініть "Ваш заголовок" на потрібний вам заголовок
         context['title'] = title
+        mixin_context = self.get_main_information()
+        context.update(mixin_context)
         return context
 
 
-class ShowPost(DetailView):
+class ShowPost(DataMixin,DetailView):
     model = Post
     template_name = 'blog/post_detail.html'
     slug_url_kwarg = 'post_slug'
@@ -27,10 +27,12 @@ class ShowPost(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = title
+        mixin_context = self.get_main_information()
+        context.update(mixin_context)
         return context
 
 
-class PostsTopics(BlogMixin,ListView):
+class PostsTopics(DataMixin,BlogMixin,ListView):
     model = Post
     template_name = 'blog/posts.html'
     context_object_name = 'posts'
@@ -42,6 +44,8 @@ class PostsTopics(BlogMixin,ListView):
         c_def = self.get_posts_context(topic_selected=topic_slug)
         context['topic'] = topic
         context['title'] = title
+        mixin_context = self.get_main_information()
+        context.update(mixin_context)
         return dict(list(context.items()) + list(c_def.items()))
 
     def get_queryset(self):

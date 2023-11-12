@@ -3,37 +3,38 @@ from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.views import View
 from django.contrib.auth import logout
 from telegram_bot_app.bot import SendInformationForm
-from .models import Psychologist, ContentItems
+from .models import Psychologist, ContentItems, Diploma, Certificate
 from blog.models import Post
 from psychologist_app.forms import HelpForm
-from .utils  import DataMixin
+from .utils import DataMixin
 
 
 class Base(DataMixin, View):
     template_name = 'psychologist_app/base.html'
+
     def get_context_data(self, request):
         context = self.get_main_information()
         context['user'] = request.user
         return render(request, self.template_name, context)
 
-class Index (DataMixin,View):
+
+class Index(DataMixin, View):
     template_name = 'psychologist_app/index.html'
 
     def get(self, request):
+        context = self.get_main_information()
         content_main = ContentItems.objects.filter(sign__title='Основна')
         methodics = ContentItems.objects.filter(sign__title='Методика')
         questions = ContentItems.objects.filter(sign__title='Запит')
+        psychologist = Psychologist.objects.get(pk=1)
         form = HelpForm()
 
-        context = {
-            'content': content_main,
-            'methodics': methodics,
-            'questions': questions,
-            'form': form,
-            'psychologist': self.get_main_information()['psychologist'],
-            'title': 'Головна сторінка',
-            'last_posts': self.get_main_information()['last_posts'],
-        }
+        context['content'] = content_main
+        context['methodics'] = methodics
+        context['questions'] = questions
+        context['form'] = form
+        context['psychologist'] = psychologist
+        context['title'] = 'Головна сторінка'
 
         return render(request, self.template_name, context=context)
 
@@ -49,17 +50,24 @@ class Index (DataMixin,View):
             return redirect('home')
 
 
-class Education (DataMixin, View):
+class Education(DataMixin, View):
     template_name = 'psychologist_app/education.html'
 
     def get(self, request):
         context = self.get_main_information()
+        diplomas = Diploma.objects.all()
+        certificates = Certificate.objects.all()
+        context['diplomas'] = diplomas
+        context['certificates'] = certificates
         return render(request, self.template_name, context=context)
+
+
 def education(request):
     context = {
         'psylogist': psychologist,
     }
     return render(request, 'psychologist_app/education.html', context=context)
+
 
 def about(request):
     context = {
