@@ -46,7 +46,7 @@ class Psychologist(models.Model):
     description = models.TextField(verbose_name='Про психолога')
     certificates = models.ManyToManyField('Certificate', verbose_name='Сертифікати', null=True, blank=True)
     diplomas = models.ManyToManyField('Diploma', verbose_name='Дипломи', null=True, blank=True)
-    contact_numbers = ArrayField(models.CharField(max_length=20), verbose_name='Номери телефонів')
+    contact_numbers = ArrayField(models.CharField(max_length=200), verbose_name='Номери телефонів')
     email = models.EmailField()# закоментувати, в базовій моделі юзера вже є поле під мило
     profile_picture = models.ImageField(upload_to='psychologist_profiles/', verbose_name='Фото')
     telegram = models.CharField(max_length=20, verbose_name='Телеграм', null=True, blank=True)

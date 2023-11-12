@@ -1,143 +1,19 @@
 {% extends 'psychologist_app/base.html' %}
-
+{% block head %}
+{% endblock%}
+{% block link %}{% url 'about' %}{% endblock %}
+{% block name %} {{ title }}{% endblock %}}
 {% block content %}
-<style>
-      .main-header {
-    display: flex;
-    align-items: center;
-
-
-  }
-
-  .left {
-    width: 50%;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .left h1 {
-    margin-top: 0;
-    text-align: center;
-  }
-
-  .left p,
-  .left a {
-    text-align: center;
-  }
-
-  .right {
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .right img {
-    margin: 20px;
-    max-width: 50%;
-    height: auto;
-    border-radius: 50%;
-  }
-  .right p {
-    margin-top: 10px;
-    text-align: center;
-  }
-</style>
-    <section class="py-5 text-center container">
-    <div class="row py-lg-5">
-      <div class="col-lg-6 col-md-8 mx-auto">
-          <h1 class="fw-light">Дитячий Психолог</h1>
-          <h2 class="fw-light">{{psylogist.user.last_name}} {{psylogist.user.first_name}}</h2>
-      </div>
-    </div>
-  </section>
-    <div class="main-header">
-    <div class="left">
-        <h1 class="fw-light">ПРО МЕНЕ</h1>
-        <p class="opacity-75">{{ psylogist.description }}</p>
-    </div>
-    <div class="right">
-        <image src="{{ psylogist.profile_picture.url }}" />
-        <h2>{{psychologist.user.last_name}} {{psychologist.user.first_name}}</h2>
-    </div>
-</div>
-<main>
-
-  <section class="py-5 text-center container">
-    <div class="row py-lg-5">
-      <div class="col-lg-6 col-md-8 mx-auto">
-          <h1 class="fw-light">Мої дипломи</h1>
-      </div>
-    </div>
-  </section>
-{% for diplom in psylogist.diplomas.all %}
-  <div class="container marketing">
-<hr class="featurette-divider">
-    <div class="row featurette">
-      {% if forloop.counter|divisibleby:2 %}
-        <div class="col-md-7 order-md-2">
-      {% else %}
-        <div class="col-md-7">
-      {% endif %}
-        <h2 class="featurette-heading fw-normal lh-1">{{ diplom.title }}</h2>
-            <p class="lead">Виданий : {{ diplom.date }}</p>
-        <p class="lead">Номер : {{ diplom.number }}</p>
-
-      </div>
-      {% if forloop.counter|divisibleby:2 %}
-        <div class="col-md-5 order-md-1">
-      {% else %}
-        <div class="col-md-5">
-      {% endif %}
-          <image src="{{ diplom.image.url }}" width="100%" height="-150%" />
-      </div>
-    </div>
-
-  </div>
-
-{% endfor %}
-    </div>
-    </div>
-
-<div></div>
-  <section class="py-5 text-center container">
-    <div class="row py-lg-5">
-      <div class="col-lg-6 col-md-8 mx-auto">
-          <h1 class="fw-light">Мої Сертифікати</h1>
-      </div>
-    </div>
-  </section>
-{% for certificate in psylogist.certificates.all %}
-  <div class="container marketing">
-<hr class="featurette-divider">
-    <div class="row featurette">
-      {% if forloop.counter|divisibleby:2 %}
-        <div class="col-md-7 order-md-2">
-      {% else %}
-        <div class="col-md-7">
-      {% endif %}
-        <h2 class="featurette-heading fw-normal lh-1">{{ certificate.title }}</h2>
-            <p class="lead">Виданий : {{ certificate.date }}</p>
-        <p class="lead">Номер : {{ certificate.number }}</p>
-        <p class="lead">Видавець : {{ certificate.issuing_organization }}</p>
-
-      </div>
-      {% if forloop.counter|divisibleby:2 %}
-        <div class="col-md-5 order-md-1">
-      {% else %}
-        <div class="col-md-5">
-      {% endif %}
-          <image src="{{ certificate.image.url }}" width="100%" height="-150%" />
-      </div>
-    </div>
-
-  </div>
-
-{% endfor %}
-    </div>
-    </div>
-</main>
-
+<section id="banner">
+	<div class="content">
+		<header>
+			<h2>Привіт ! Мене звуть {{ psychologist.user.first_name }} {{ psychologist.user.last_name }}<br/>
+				Я дитячий психолог</h2>
+		</header>
+		<p>{{ psychologist.description}}</p>
+	</div>
+	<span class="image object">
+		<img src="{{ psychologist.profile_picture.url }}" alt="" />
+	</span>
+</section>
 {% endblock %}

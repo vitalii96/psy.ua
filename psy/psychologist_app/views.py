@@ -59,25 +59,27 @@ class Education(DataMixin, View):
         certificates = Certificate.objects.all()
         context['diplomas'] = diplomas
         context['certificates'] = certificates
+        context['title'] = 'Моя освіта'
         return render(request, self.template_name, context=context)
 
+class About (DataMixin,View):
+    template_name = 'psychologist_app/about.html'
+    def get (self, request):
+        psychologist = Psychologist.objects.get(pk=1)
+        context = self.get_main_information()
+        context['psychologist'] = psychologist
+        context['title'] = 'Про мене'
 
-def education(request):
-    context = {
-        'psylogist': psychologist,
-    }
-    return render(request, 'psychologist_app/education.html', context=context)
-
-
-def about(request):
-    context = {
-        'psylogist': psychologist,
-    }
-    return render(request, 'psychologist_app/about.html', context=context)
+        return render(request,self.template_name,context)
 
 
-def contact(request):
-    context = {
-        'psylogist': psychologist,
-    }
-    return render(request, 'psychologist_app/contact.html', context=context)
+class ContactInformation (DataMixin,View):
+    template_name = 'psychologist_app/contact.html'
+    def get(self,request):
+        psychologist = Psychologist.objects.get(pk=1)
+        context = self.get_main_information()
+        form = HelpForm()
+        context['psychologist'] = psychologist
+        context['form'] = form
+        context['title'] = 'Контактна інформація'
+        return render(request, self.template_name, context)
