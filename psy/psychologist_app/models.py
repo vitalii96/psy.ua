@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 
 class Diploma(models.Model):
     title = models.CharField(max_length=255, verbose_name='Назва диплому')
+    issuing_organization = models.CharField(max_length=255, verbose_name='Видавник/Організація', null=True)
+    special = models.CharField(max_length=255, verbose_name='Спеціальність', null=True)
     date = models.DateField(verbose_name='Коли виданий')
     image = models.ImageField(upload_to='diploma_images/', verbose_name='Фото диплому')
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')

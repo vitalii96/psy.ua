@@ -1,8 +1,49 @@
 {% extends 'psychologist_app/base.html' %}
 {% load static %}
+{% block link %}{% url 'education' %}{% endblock %}
+{% block name %} {{ title }}{% endblock %}}
 {% block head %}
-
 {% endblock%}
 {% block content %}
+<br>
+<h1>Дипломи</h1>
+{% for diploma in psychologist.diplomas.all %}
+<section id="banner">
+	<div class="content">
+		<header>
+			<h2><a href="{{diploma.get_absolute_url}}">{{diploma.title}}</a></h2>
+			<p>Видавник : {{diploma.issuing_organization}}</p>
+			<p>Спеціальність : {{diploma.special}}</p>
+			<p>Виданий : {{diploma.date}}</p>
+			<p>Номер : {{ diploma.number }}</p>
+		</header>
+	</div>
+		<span class="image object">
+			<img  src="{{ diploma.image.url }}" alt=""
+     		style="transition: transform 0.2s ease-out; overflow: hidden;"
+     		 onmouseover="this.style.transform = 'scale(1.05)';"
+     		onmouseout="this.style.transform = 'scale(1)';" />
+		</span>
+</section>
+{% endfor %}
+<h1>Сертифікати</h1>
+{% for certificate in psychologist.certificates.all %}
+<section id="banner">
+	<div class="content">
 
+		<header>
+			<h2><a href="{{certificates.get_absolute_url}}">{{certificate.title}}</a></h2>
+			<p>Видавник : {{certificate.issuing_organization}}</p>
+			<p>Виданий : {{certificate.date}}</p>
+			<p>Номер : {{ certificate.number }}</p>
+		</header>
+	</div>
+		<span class="image object">
+			<img  src="{{ certificate.image.url }}" alt=""
+     		style="transition: transform 0.2s ease-out; overflow: hidden;"
+     		 onmouseover="this.style.transform = 'scale(1.05)';"
+     		onmouseout="this.style.transform = 'scale(1)';" />
+		</span>
+</section>
+{% endfor %}
 {% endblock %}

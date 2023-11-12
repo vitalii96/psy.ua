@@ -49,6 +49,12 @@ class Index (DataMixin,View):
             return redirect('home')
 
 
+class Education (DataMixin, View):
+    template_name = 'psychologist_app/education.html'
+
+    def get(self, request):
+        context = self.get_main_information()
+        return render(request, self.template_name, context=context)
 def education(request):
     context = {
         'psylogist': psychologist,
