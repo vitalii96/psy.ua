@@ -12,7 +12,7 @@
           <div class="form-error">{{ form.username.errors }}</div>
         </div>
         <div class="form-group">
-          <label for="{{ form.first_name.id_for_label }}">Імя</label>
+          <label for="{{ form.first_name.id_for_label }}">Ім'я</label>
           {{ form.first_name }}
           <div class="form-error">{{ form.first_name.errors }}</div>
         </div>
@@ -22,7 +22,7 @@
           <div class="form-error">{{ form.last_name.errors }}</div>
         </div>
         <div class="form-group">
-          <label for="{{ form.email.id_for_label }}">Імейл</label>
+          <label for="{{ form.email.id_for_label }}">e-mail</label>
           {{ form.email }}
           <div class="form-error">{{ form.email.errors }}</div>
         </div>
@@ -32,12 +32,12 @@
           <div class="form-error">{{ form.password1.errors }}</div>
         </div>
         <div class="form-group">
-          <label for="{{ form.password2.id_for_label }}">Пароль повтор</label>
+          <label for="{{ form.password2.id_for_label }}">Повтор пароля</label>
           {{ form.password2 }}
           <div class="form-error">{{ form.password2.errors }}</div>
         </div>
 
 
-        <button type="submit">Зберегти</button>
+        <button style="margin-top: 1%" type="submit">Зберегти</button>
     </form>
 {% endblock %}

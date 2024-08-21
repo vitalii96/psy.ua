@@ -19,5 +19,6 @@
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
+    <button style="margin-top: 1%" type="submit">Зберегти</button>
 </form>
 {% endblock %}

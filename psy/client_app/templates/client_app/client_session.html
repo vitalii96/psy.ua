@@ -1,10 +1,11 @@
 {% extends 'psychologist_app/base.html' %}
 
 {% block content %}
-<a href="{% url 'session_record' %}">Записатись на сессію</a>
-
+<div style="margin-top: 2%; margin-bottom:2%">
+<a class="button primary fit" href="{% url 'session_record' %}">Записатись на сессію</a>
+</div>
 {% if sessions %}
-<h1>Ваші сессії:</h1>
+<h3>Ваші сессії:</h3>
 <table>
   <thead>
     <tr>

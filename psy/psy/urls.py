@@ -8,7 +8,7 @@ urlpatterns = [
     path('', include('review_app.urls')),
     path('', include('client_app.urls')),
     path('blog/', include('blog.urls')),
-    path('', include('telegram_bot_app.urls')),
+    # path('bot/', include('telegram_bot_app.urls')),
     path('captcha/', include('captcha.urls')),
 ]
 

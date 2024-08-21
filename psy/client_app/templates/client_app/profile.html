@@ -2,17 +2,13 @@
 {% block content %}
 <body>
 
-<div>
-    <a href="{% url 'sessions' %}">Мої сессії</a>
+<div class="col-6 col-12-small" style="margin-top: 5%">
+    <ul class="actions stacked">
+        <li><a class="button primary fit" href="{% url 'sessions' %}">Мої сессії</a></li>
+        <li><a class="button fit" href="{% url 'session_record' %}">Записатись на сессію</a></li>
+        <li><a class="button primary fit" href="{% url 'edit_profile' %}">Змінити дані профілю</a></li>
+    </ul>
 </div>
-<div>
-    <a href="{% url 'session_record' %}">Записатись на сессію</a>
-</div>
-<div>
-   <a href="{% url 'edit_profile' %}">Змінити дані профілю</a>
-</div>
-
 
 </body>
-
 {% endblock %}

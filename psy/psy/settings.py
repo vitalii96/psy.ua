@@ -13,9 +13,9 @@ SECRET_KEY = 'django-insecure-epl0pl1q4!vcky8-#sf4w$4^qft#%t8(rgd0=-f(8tw6i1z0nk
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['4c68-91-201-147-221.ngrok-free.app', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['2b75-91-201-147-221.ngrok-free.app', '127.0.0.1', 'localhost']
 
-
+WEBHOOK_URL = 'https://2b75-91-201-147-221.ngrok-free.app/bot'
 # Application definition
 SITE_ID = 3
 
@@ -86,6 +86,21 @@ WSGI_APPLICATION = 'psy.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# from dotenv import load_dotenv
+# load_dotenv()
+
+# Налаштування бази даних
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv('POSTGRES_DB'),
+#         'USER': os.getenv('POSTGRES_USER'),
+#         'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+#         'HOST': os.getenv('HOST'),
+#         'PORT': os.getenv('PORT'),
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -96,8 +111,6 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

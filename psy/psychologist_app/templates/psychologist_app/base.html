@@ -1,5 +1,4 @@
 {% load static %}
-<!DOCTYPE HTML>
 <html>
 	<head>
 		<title>{{title}}</title>
@@ -23,10 +22,9 @@
 								<header id="header">
 									<h2><a href="{% block link %} {% url 'home' %} {% endblock %}" class="logo"><strong>{% block name%}Головна сторінка {% endblock %}</strong></a></h2>
 									<ul class="icons">
-										<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-										<li><a href="#" class="icon brands fa-viber"><span class="label">Snapchat</span></a></li>
-										<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-										<li><a href="#" class="icon brands fa-telegram"><span class="label">Medium</span></a></li>
+										<li><a href="{{ psychologist.facebook }}" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+										<li><a href="{{ psychologist.instagram }}" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+										<li><a href="{{ psychologist.telegram }}" class="icon brands fa-telegram"><span class="label">Medium</span></a></li>
 									</ul>
 								</header>
 						{% block content %}
@@ -78,7 +76,7 @@
 									</div>
 									{% endfor %}
 									<ul class="actions">
-										<li><a href="#" class="button">Більше постів</a></li>
+										<li><a href="{% url 'topics' %}" class="button">Більше постів</a></li>
 									</ul>
 								</section>
 
@@ -92,13 +90,12 @@
 										{% for phone in psychologist_phone_numbers %}
 										<li class="icon solid fa-phone">{{ phone }}</li>
 										{% endfor %}
-										<li class="icon solid fa-home">1234 Somewhere Road #8254<br />
-										Nashville, TN 00000-0000</li>
+										<li class="icon solid fa-home">Червоноград, Львівська область</li>
 									</ul>
 								</section>
 							<!-- Footer -->
 								<footer id="footer">
-									<p class="copyright">&copy; Панчук В.В <a href="https://unsplash.com">Портфоліо</a>Дизайн: <a href="https://html5up.net">Посилання</a>.</p>
+									<p class="copyright">&copy; Панчук В.В <a href="https://github.com/vitalii96"> Портфоліо</a></p>
 								</footer>
 						</div>
 					</div>

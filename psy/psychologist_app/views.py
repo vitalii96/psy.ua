@@ -83,3 +83,20 @@ class ContactInformation (DataMixin,View):
         context['form'] = form
         context['title'] = 'Контактна інформація'
         return render(request, self.template_name, context)
+
+    def post(self, request):
+        form = HelpForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            telegram = form.cleaned_data['telegram']
+            phone_number = form.cleaned_data['phone_number']
+            description = form.cleaned_data['description']
+            SendInformationForm(name, phone_number, description, telegram)
+            form = HelpForm()
+            return redirect('home')
+        else:
+            # Якщо форма недійсна, поверніть ту ж саму сторінку з помилками
+            context = self.get_main_information()
+            context['form'] = form
+            context['title'] = 'Контактна інформація'
+            return render(request, self.template_name, context)

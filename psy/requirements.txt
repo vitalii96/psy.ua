@@ -59,5 +59,3 @@ telebot==0.0.5
 tzdata==2023.3
 uritemplate==4.1.1
 urllib3==1.26.13
-
-python-dotenv~=1.0.1
